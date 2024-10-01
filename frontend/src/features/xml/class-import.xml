@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE class-upload [
+    <!ELEMENT class-upload (classes)>
+    <!ATTLIST class-upload operation (insert|update) "insert">
+    <!ELEMENT classes (class+)>
+    <!ELEMENT class (id?, date, location_id, activity_id, trainer_user_id, time)>
+    <!ELEMENT id (#PCDATA)>
+    <!ELEMENT date (#PCDATA)>
+    <!ELEMENT location_id (#PCDATA)>
+    <!ELEMENT activity_id (#PCDATA)>
+    <!ELEMENT trainer_user_id (#PCDATA)>
+    <!ELEMENT time (#PCDATA)>
+]>
+
+<class-upload operation="insert">
+    <classes>
+        <class>
+            <date>2024-05-10</date>
+            <location_id>2</location_id>
+            <activity_id>2</activity_id>
+            <trainer_user_id>2</trainer_user_id>
+            <time>02:00:00</time>
+        </class>
+    </classes>
+</class-upload>
+
+<!-- Update version  -->
+<!-- <class-upload operation="update">
+    <classes>
+        <class>
+            <id></id>
+            <date></date>
+            <location_id></location_id>
+            <activity_id></activity_id>
+            <trainer_user_id></trainer_user_id>
+            <time></time>
+        </class>
+    </classes>
+</class-upload> -->

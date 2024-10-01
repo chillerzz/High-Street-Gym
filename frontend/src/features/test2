@@ -1,0 +1,60 @@
+// import { useAuthentication } from "../authentication"
+// import BottomNav from "../../common/BottomNav"
+// import { MobilePageHeader } from "../../common/MobilePageHeader"
+// import ClassComponent from "./ClassComponent"
+// import { useEffect, useState } from "react"
+// import * as Classes from "../../api/classes"
+// import * as Activities from "../../api/activities"
+
+// const ClassesPage = () => {
+//     const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]); // Set today's date
+//     const [endDate, setEndDate] = useState(new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]); // Set date for one week ahead
+//     const [classes, setClasses] = useState([]);
+
+
+
+//     useEffect(() => {
+//         Classes.getClassesByDateRange(startDate, endDate).then(classes => setClasses(classes))
+//     }, [])
+//     console.log(classes)
+
+
+//     return <>
+//         <div className="bg-background-primary min-h-screen overflow-hidden">
+//             <main className="px-4">
+//                 <MobilePageHeader
+//                     pageTitle="Classes">
+//                 </MobilePageHeader>
+
+//                 <div className=" my-2 card w-full p-5 bg-base-100 shadow-xl md:w-96">
+
+//                     <div>
+//                         {classes.map(classItem => {
+//                             return <>
+//                                 <form>
+//                                     <div>
+//                                         {/* <h1 className="p-2 text-xl font-semibold flex justify-center">{eachClass.datetime}</h1>
+//                                         <div className="flex justify-between items-center p-2">
+//                                             <span className="text-lg">{eachClass.activity.name}</span>
+//                                             <button className="btn bg-test">Book</button>
+//                                         </div> */}
+//                                                                                 <h1 className="p-2 text-xl font-semibold flex justify-center">{classItem.datetime}</h1>
+
+//                                         <div className="flex justify-between items-center p-2" key={classItem.id}>
+//                                             {/* <span className="text-lg">{classItem.datetime}</span> */}
+//                                             <span className="text-lg">{classItem.activity_name}</span>
+//                                             <button className="btn bg-test">Book</button>
+//                                         </div>
+//                                     </div>
+//                                 </form>
+//                             </>
+//                         })}
+//                     </div>
+//                 </div>
+//                 <BottomNav />
+//             </main>
+//         </div>
+//     </>
+// };
+
+// export default ClassesPage;

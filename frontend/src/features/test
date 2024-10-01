@@ -1,0 +1,177 @@
+// import { useAuthentication } from "../authentication"
+// import BottomNav from "../../common/BottomNav"
+// import { MobilePageHeader } from "../../common/MobilePageHeader"
+// import ClassComponent from "./ClassComponent"
+// import { useEffect, useState } from "react"
+// import * as Classes from "../../api/classes"
+// import * as Activities from "../../api/activities"
+
+
+
+// export function ClassesPage() {
+
+//     const [classes, setClasses] = useState([])
+//     const [selectedActivity, setSelectedActivity] = useState()
+//     const [sameDates, setSameDates] = useState([])
+//     const [date, setDate] = useState([])
+//     const currentDate = new Date().toLocaleString()
+//     const encodedDateTime = encodeURIComponent(currentDate);
+
+
+//     useEffect(() => {
+//         const today = new Date().toISOString();
+//         const endDate = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toISOString(); // 1 week ahead
+    
+//         const fetchData = async () => {
+//           const classData = await getClassesBetweenDateRange(today, endDate);
+//           setClasses(classData);
+//         };
+    
+//         fetchData();
+//       }, []);
+
+
+
+//     // TODO: On booking click, get by classId
+//     // Navigate to classes/17 or booking/17
+
+//     // get by activity id = 2
+//     // Load in available trainers, location and time (multiple options if multiple classes on the same day)
+//     // set each option with a select box that targets the option ID
+//     // post to bookings: user id, class id, created datetime
+
+
+//     // NOTE: This filters out the dates but gets rid of classes that are there aswell 
+//     // useEffect(() => {
+//     //     Classes.getAll().then(async classes => {
+//     //         const classesWithExtraDataPromises = classes.map(async eachClass => {
+//     //             const activity = await Activities.getById(eachClass.activity_id)
+    
+//     //             return {
+//     //                 id: eachClass.id,
+//     //                 datetime: new Date(eachClass.datetime).toLocaleDateString(),
+//     //                 activity
+//     //             };
+//     //         });
+    
+//     //         const classesWithExtraData = await Promise.all(classesWithExtraDataPromises);
+    
+//     //         // Filter out duplicate dates
+//     //         const uniqueClasses = Array.from(new Set(classesWithExtraData.map(eachClass => eachClass.activity.name)));
+    
+//     //         // Filter classes to keep only one class per unique date
+//     //         const filteredClasses = uniqueClasses.map(uniqueClass => {
+//     //             return classesWithExtraData.find(eachClass => eachClass.activity.name === uniqueClass);
+//     //         });
+    
+//     //         setClasses(filteredClasses);
+//     //     });
+//     // }, []);
+
+
+//     // TRYING TO USE THE BIG JOINED MODEL
+//     useEffect(() => {
+//         Classes.getAll().then(classes => {
+            
+//             setClasses(classes)
+//         })
+//     }, [])
+
+//     // useEffect(() => {
+//     //     Classes.getAll().then(async classes => {
+//     //         const classesWithExtraDataPromises = classes.map(async eachClass => {
+//     //             const activity = await Activities.getById(eachClass.activity_id)
+
+//     //             return Promise.resolve({
+//     //                 id: eachClass.id,
+//     //                 datetime: new Date(eachClass.datetime).toLocaleDateString(),
+//     //                 activity
+//     //             })
+//     //         })
+
+//     //         const classesWithExtraData = await Promise.all(classesWithExtraDataPromises)
+            
+
+//     //         console.log(classesWithExtraData)
+
+//     //         // classesWithExtraData.filter(duplicates)
+
+//     //         const sameDates = classesWithExtraData.map(eachClass => eachClass.datetime)
+//     //         setSameDates(sameDates)
+            
+
+//     //         // function checkDuplicates() {
+//     //         //     return 
+//     //         // }
+
+//     //         console.log(classesWithExtraData)
+//     //         console.log(sameDates)
+
+//     //         // console.log(classesWithExtraData)
+
+//     //         // TODO: TRYING TO GET TIMETABLE TO DISPLAY CORRECTLY.
+//     //         // WAS PLAYING WITH THIS IN TUTORIAL 
+//     //         // const groupedClasses = Object.groupBy(classesWithExtraData, ({ datetime}) => datetime)
+            
+//     //         setClasses(classesWithExtraData)
+//     //     })
+//     // }, [])
+
+
+//     // function chooseClassSubmit(e) {
+// 	// 	e.preventDefault()
+
+//     //     Classes.getById()
+
+// 	// 	Activities.getById()
+// 	// 	// TODO: Client side validation here 
+
+// 	// 	login(formData.email, formData.password)
+// 	// 		.then(result => {
+// 	// 			setStatusMessage("Login successful!")
+// 	// 			navigate("/classes")
+// 	// 		})
+// 	// 		.catch(error => {
+// 	// 			setStatusMessage(error)
+// 	// 		})
+// 	// }
+
+
+//     return <>
+//         <div className="bg-background-primary min-h-screen overflow-hidden">
+//             <main className="px-4">
+//                 <MobilePageHeader
+//                     pageTitle="Classes">
+//                 </MobilePageHeader>
+
+//                 <div className=" my-2 card w-full p-5 bg-base-100 shadow-xl md:w-96">
+
+//                     <div>
+//                         {classes.map(eachClass => {
+//                             return <>
+//                                 <form>
+//                                     <div>
+//                                         {/* <h1 className="p-2 text-xl font-semibold flex justify-center">{eachClass.datetime}</h1>
+//                                         <div className="flex justify-between items-center p-2">
+//                                             <span className="text-lg">{eachClass.activity.name}</span>
+//                                             <button className="btn bg-test">Book</button>
+//                                         </div> */}
+//                                         <div className="flex justify-between items-center p-2" key={eachClass.id}>
+//                                             <span className="text-lg">{eachClass.datetime}</span>
+//                                             <span className="text-lg">{eachClass.activity_name}</span>
+//                                             <button className="btn bg-test">Book</button>
+//                                         </div>
+//                                     </div>
+//                                 </form>
+//                             </>
+//                         })}
+//                     </div>
+//                 </div>
+//                 <BottomNav />
+//             </main>
+//         </div>
+//     </>
+
+// }
+
+// export default ClassesPage

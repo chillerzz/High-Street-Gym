@@ -1,0 +1,115 @@
+import { Link } from "react-router-dom"
+import BottomNav from "../../common/BottomNav"
+import { BlogPost } from "./BlogPost"
+import { MobilePageHeader } from "../../common/MobilePageHeader"
+import { useAuthentication } from "../authentication"
+import * as Blog from "../../api/blog"
+import { useState, useEffect } from "react"
+
+
+export function BlogPage() {
+    
+    const [user, login, logout, refresh] = useAuthentication();
+    const authenticationKey = user ? user.authenticationKey : ''; // Conditional check for authenticationKey
+    const [statusMessage, setStatusMessage] = useState("");
+    const [formData, setFormData] = useState({
+        title: "",
+        content: "",
+        date: "",
+        time: "",
+        user_id: "",
+    });
+
+	function handleOnSubmit(e) {
+    
+		e.preventDefault()
+		setStatusMessage("Posting...")
+        const currentDate = new Date().toISOString().slice(0, 19).replace("T", " ");
+        const currentTime = new Date().toTimeString().slice(0, 8);
+
+        formData.date = currentDate;
+        formData.time = currentTime;
+        formData.user_id = user.id;
+		// TODO: Client side validation here 
+
+        // Add user_id to the sighting object before sending
+        const postData = {
+            ...formData,
+            user_id: user.id,
+            date, currentDate,
+            time, currentTime,
+        }
+        console.log(postData)
+        
+        Blog.create(postData, authenticationKey).then(result => {
+            setStatusMessage(result.message)
+            setFormData({
+                title: "",
+                content: ""
+            })
+        }).catch(error => {
+				setStatusMessage(error)
+			})
+	}
+
+    return <>
+        <div className="bg-background-primary min-h-screen overflow-hidden">
+            <main className="px-4">
+
+            <MobilePageHeader 
+                pageTitle="Blog">
+            </MobilePageHeader>
+
+
+                <button className="btn shadow bg-test w-full" onClick={() => document.getElementById('my_modal_2').showModal()}>Create Post</button>
+                <dialog id="my_modal_2" className="modal modal-bottom sm:modal-middle">
+                    <div className="modal-box">
+                        <section>
+                            <div className="flex justify-center mt-5">
+                                <div className="w-full bg-base-100md:w-96">
+
+                                    <form className="py-4" onSubmit={handleOnSubmit}>
+                                        <span className="text-2xl font-semibold flex justify-center">Share some tips!</span>
+                                        <label className="flex items-center gap-2 m-4">
+                                            <input type="text" placeholder="Title" className="input input-bordered w-full" onChange={(e) => setFormData(existing => { return { ...existing, title: e.target.value } })} />
+                                        </label>
+                                        <label className="flex items-center gap-2 m-4">
+                                            <textarea className="textarea textarea-bordered w-full" placeholder="Message" onChange={(e) => setFormData(existing => { return { ...existing, content: e.target.value } })} ></textarea>
+                                        </label>
+
+                                        <div className="flex justify-center gap-2">
+                                            <button className="btn border-test border-2">Post</button>
+                                            <button className="btn btn-ghost">Clear</button>
+                                        </div>
+                                        <label className="label mt-2 flex justify-end">
+								            <span className="label-text-alt">{statusMessage}</span>
+							            </label>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+                    <form method="dialog" className="modal-backdrop">
+                        <button>close</button>
+                    </form>
+                </dialog>
+                
+
+                <section className="my-2 flex flex-col gap-1">
+
+                    <BlogPost
+                        name="Jack Smith">
+                    </BlogPost>
+
+
+                </section>
+
+            </main>
+            <BottomNav />
+        </div>
+    </>
+}
+
+export default BlogPage
